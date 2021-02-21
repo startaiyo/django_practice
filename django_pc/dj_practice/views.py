@@ -1,7 +1,20 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.generic import TemplateView
 
+class IndexView(TemplateView):
+    template_name = "index.html"
+    def get_context_data(self):
+        ctxt = super().get_context_data()
+        ctxt["username"]="doi"
+        return ctxt
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
-# Create your views here.
+class AboutView(TemplateView):
+    template_name = "about.html"  
+    def get_context_data(self):
+        ctxt = super().get_context_data()
+        ctxt["num_services"]=12345
+        ctxt["items"]=[
+            "python",
+            "html",
+            "ruby on rails"
+        ]
+        return ctxt
