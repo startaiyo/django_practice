@@ -12,8 +12,8 @@ class App extends Component {
     this.props.dispatch(fetchTasks());
   }
 
-  onCreateTask = ({ title, description }) => {
-    this.props.dispatch(createTask({ title, description }));
+  onCreateTask = ({ skill_name, content }) => {
+    this.props.dispatch(createTask({ skill_name, content }));
   };
 
   onStatusChange = (id, status) => {

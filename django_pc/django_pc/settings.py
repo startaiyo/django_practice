@@ -82,9 +82,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_pc.wsgi.application'
 
-#CORS_ORIGIN_WHITELIST = [
-#    'http://www.mypress.jp:3000',
-#]
+CORS_ORIGIN_WHITELIST = [
+   'http://localhost:3000',
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
