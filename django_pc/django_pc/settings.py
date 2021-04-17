@@ -38,10 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'rest_framework',
+    'corsheaders',
     'dj_practice',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'EXCEPTION_HANDLER': 'djangotodo.todos.utils.custom_exception_handler'
+}
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,6 +82,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_pc.wsgi.application'
 
+#CORS_ORIGIN_WHITELIST = [
+#    'http://www.mypress.jp:3000',
+#]
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -79,6 +92,7 @@ WSGI_APPLICATION = 'django_pc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+        'NAME':'postgres',
         'PASSWORD': 'mypassword',
         'HOST': 'localhost',
         'PORT': '5432', 
