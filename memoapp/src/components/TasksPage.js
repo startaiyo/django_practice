@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Icon, Button } from 'antd';
 
 import TaskList from './TaskList';
 import { TASK_STATUSES } from '../constants';
@@ -90,7 +90,7 @@ class AddTaskForm extends React.Component {
             rules: [{ required: true, message: 'taskを入力してください！' }],
           })(
             <Input
-              // prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder="task"
             />,
           )}
@@ -100,7 +100,7 @@ class AddTaskForm extends React.Component {
             rules: [{ required: true, message: 'descriptionを入力してください！' }],
           })(
             <Input
-              // prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder="description"
             />,
           )}
@@ -115,4 +115,4 @@ class AddTaskForm extends React.Component {
   }
 }
 
-const WrappedAddTaskForm = AddTaskForm;
+const WrappedAddTaskForm = Form.create({ name: 'add_task_form' })(AddTaskForm);
