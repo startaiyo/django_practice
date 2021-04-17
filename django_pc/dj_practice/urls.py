@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import IndexView, AboutView
+from . import views
 urlpatterns = [
-    path('', IndexView.as_view()),
-    path('about/', AboutView.as_view()),
+    path('', views.memo_list),
+    path('<int:pk>/', views.memo_detail),
 ]

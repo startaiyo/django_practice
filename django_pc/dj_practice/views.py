@@ -1,20 +1,43 @@
-from django.views.generic import TemplateView
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from dj_practice.models import Memo
+from dj_practice.serializers import MemoSerializer
 
-class IndexView(TemplateView):
-    template_name = "index.html"
-    def get_context_data(self):
-        ctxt = super().get_context_data()
-        ctxt["username"]="doi"
-        return ctxt
+@csrf_exempt
+def memo_list(request):
+    if request.method=='GET':
+        memos=Memo.objects.all()
+        serializer=MemoSerializer(memos,many=True)
+        return JsonResponse(serializer.data, safe=False)
+    
+    elif request.method=='POST':
+        data=JSONParser().parse(request)
+        serializer=MemoSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data,status=201)
+        return JsonResponse(serializer.errors, status=400)
 
-class AboutView(TemplateView):
-    template_name = "about.html"  
-    def get_context_data(self):
-        ctxt = super().get_context_data()
-        ctxt["num_services"]=12345
-        ctxt["items"]=[
-            "python",
-            "html",
-            "ruby on rails"
-        ]
-        return ctxt
+@csrf_exempt
+def memo_detail(request,pk):
+    try:
+        memo=Memo.objects.get(pk=pk)
+    except Memo.DoesNotExist:
+        return HttpResponse(status=404)
+    
+    if request.method == 'GET':
+        serializer=MemoSerializer(memo)
+        return JsonResponse(serializer.data)
+    
+    elif request.method=='PUT':
+        data=JSONParser().parse(request)
+        serializer=MemoSerializer(memo,data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
+    
+    elif request.method=='DELETE':
+        memo.delete()
+        return HttpResponse(status=204)
